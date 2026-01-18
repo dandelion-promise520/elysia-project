@@ -2,7 +2,8 @@ import { Elysia, t } from "elysia";
 import { openapi, fromTypes } from "@elysiajs/openapi";
 import { supabasePlugin } from "./plugin/supabase";
 
-export const app = new Elysia()
+// 实例化 Elysia，不调用 .listen
+const app = new Elysia()
   .use(
     openapi({
       references: fromTypes(),
@@ -10,7 +11,6 @@ export const app = new Elysia()
     }),
   )
   .use(supabasePlugin)
-
   .get("/", () => {
     return { test: "hello" as const };
   })
@@ -20,13 +20,10 @@ export const app = new Elysia()
     if (error) return { error: error.message };
     return { product: data };
   })
-
-  .post("/json", ({ body, status }) => body, {
+  .post("/json", ({ body }) => body, {
     body: t.Object({
       hello: t.String(),
     }),
-  })
+  });
 
-  .listen(3000);
-
-console.log(`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`);
+export default app.handle; // 一定要导出 handler，这一行是 Vercel 需要的
