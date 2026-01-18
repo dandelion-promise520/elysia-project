@@ -1,6 +1,7 @@
 {
   "name": "elysia-project",
   "version": "1.0.50",
+  "module": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts",
@@ -11,12 +12,13 @@
   },
   "dependencies": {
     "@elysiajs/cors": "^1.4.1",
+    "@elysiajs/openapi": "^1.4.13",
+    "@supabase/supabase-js": "^2.90.1",
     "elysia": "latest"
   },
   "devDependencies": {
     "bun-types": "latest",
     "oxfmt": "^0.24.0",
     "oxlint": "^1.39.0"
-  },
-  "module": "src/index.js"
+  }
 }
