@@ -26,4 +26,4 @@ const app = new Elysia()
     }),
   });
 
-export default app.handle; // 一定要导出 handler，这一行是 Vercel 需要的
+export default app; // 一定要导出 handler，这一行是 Vercel 需要的
