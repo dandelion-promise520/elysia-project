@@ -14,11 +14,36 @@ const app = new Elysia()
   .get("/", () => {
     return "Hello,Elysia";
   })
-  .get("/product", async ({ supabase }) => {
-    const { data, error } = await supabase.from("product").select("*");
+  .get("/product", async ({ supabase, query }) => {
+    const { search } = query;
+    try {
+      // 从 Supabase 查询数据
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .ilike("name", `%${search}%`) // 模糊搜索
+        .limit(10);
 
-    if (error) return { error: error.message };
-    return data;
+      if (error) {
+        return {
+          success: false,
+          error: error.message,
+          statusCode: 400,
+        };
+      }
+
+      return {
+        success: true,
+        data: data,
+        count: data?.length || 0,
+      };
+    } catch {
+      return {
+        success: false,
+        error: "Database query failed",
+        statusCode: 500,
+      };
+    }
   })
   .post("/json", ({ body }) => body, {
     body: t.Object({
