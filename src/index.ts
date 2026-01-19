@@ -24,6 +24,10 @@ const app = new Elysia()
     body: t.Object({
       hello: t.String(),
     }),
-  });
+  })
+  .listen(3000);
+
+console.log(`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`);
+console.log(`🦊 docs is running at ${app.server?.hostname}:${app.server?.port}/docs`);
 
 export default app;
