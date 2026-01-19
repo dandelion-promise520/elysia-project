@@ -12,7 +12,7 @@ const app = new Elysia()
   )
   .use(supabasePlugin)
   .get("/", () => {
-    return { test: "hello" as const };
+    return "Hello,Elysia";
   })
   .get("/product", async ({ supabase }) => {
     const { data, error } = await supabase.from("product").select("*");
