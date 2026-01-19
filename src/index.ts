@@ -18,7 +18,7 @@ const app = new Elysia()
     const { data, error } = await supabase.from("product").select("*");
 
     if (error) return { error: error.message };
-    return { product: data };
+    return { data };
   })
   .post("/json", ({ body }) => body, {
     body: t.Object({
