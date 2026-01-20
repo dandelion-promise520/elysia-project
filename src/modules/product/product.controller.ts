@@ -1,14 +1,15 @@
 import Elysia from "elysia";
-import { ProductService } from "./service";
+import { ProductService } from "./product.service";
 import { supabasePlugin } from "../../plugins/supabase";
 
 export const product = new Elysia({ prefix: "/product" })
   .use(supabasePlugin)
-  .get("", ({ supabase, query }) => {
+  .get("", ({ query, supabase }) => {
+    const productService = new ProductService(supabase);
     if (query.search) {
-      return ProductService.searchProducts({ limit: 10, supabase });
+      return productService.searchProducts(query.search);
     } else {
-      return ProductService.getAllProducts({ limit: 10, supabase });
+      return productService.getAllProducts();
     }
   })
   .get("/:id", ({ params }) => {

@@ -9,11 +9,6 @@ export interface Product {
   created_at?: string;
 }
 
-export interface SearchQuery {
-  search?: string;
-  limit?: number;
-}
-
 export interface ApiResponse<T> {
   success?: boolean;
   data?: T;
